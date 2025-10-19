@@ -59,16 +59,6 @@ Tambahkan Izin Kamera (Android), Tambahkan di file C:\JSFlutter\ocr_sederhana\an
 
 ---
 
-### Langkah 5 : Buat Variabel text dan parameter di constructor
-
-Tambahkan variabel text dan parameter di constructor seperti berikut.
-
-```dart
-final String text;
-
-const RedTextWidget({Key? key, required this.text}) : super(key: key);
-```
-
 ---
 
 ### 📸 Dokumentasi
