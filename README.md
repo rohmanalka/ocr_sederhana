@@ -7,8 +7,8 @@
 **No Absen:** 26  
 
 **Repository:** [PMB_JS07 - OCR Sederhana](https://github.com/rohmanalka/ocr_sederhana)  
-📄 **[Laporan Lengkap Jobsheet 7](https://github.com/rohmanalka/flutter_plugin_pubdev/blob/main/Jobsheet6_26_SIB3C_Muhammad%20Rohman%20Al%20Kautsar.pdf)**  
-📄 **[Laporan Lengkap UTS](https://github.com/rohmanalka/flutter_plugin_pubdev/blob/main/Jobsheet6_26_SIB3C_Muhammad%20Rohman%20Al%20Kautsar.pdf)**  
+📄 **[Laporan Lengkap Jobsheet 7](https://github.com/rohmanalka/ocr_sederhana/blob/main/Jobsheet7_26_SIB3C_Muhammad%20Rohman%20Al%20Kautsar.pdf)**  
+📄 **[Laporan Lengkap UTS](https://github.com/rohmanalka/ocr_sederhana/blob/main/UTSPMB_26_SIB3C_Muhammad%20Rohman%20Al%20Kautsar.pdf)**  
 
 ---
 
@@ -36,7 +36,7 @@ dependencies:
 lalu jalankan flutter pub get
   📷 **Screenshot:**  
 <p>
-  <img src="images/2.png" width="300"/>
+  <img src="images/2.png" width="250"/>
 </p>
 
 ---
@@ -55,7 +55,7 @@ Tambahkan Izin Kamera (Android), Tambahkan di file C:\JSFlutter\ocr_sederhana\an
 
   📷 **Screenshot:**  
 <p>
-  <img src="images/3.png" width="300"/>
+  <img src="images/3.png" width="250"/>
 </p>
 
 ---
@@ -66,9 +66,9 @@ Tambahkan Izin Kamera (Android), Tambahkan di file C:\JSFlutter\ocr_sederhana\an
 
    📷 **Screenshot Hasil:**  
 <p align="center">
-  <img src="images/hasil1.jpg" width="300"/>
-  <img src="images/hasil2.jpg" width="300"/>
-  <img src="images/hasil3.jpg" width="300"/>
+  <img src="images/hasil1.jpg" width="250"/>
+  <img src="images/hasil2.jpg" width="250"/>
+  <img src="images/hasil3.jpg" width="250"/>
 </p>
 
 ----
