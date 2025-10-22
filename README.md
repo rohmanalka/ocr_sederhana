@@ -64,7 +64,7 @@ Tambahkan Izin Kamera (Android), Tambahkan di file C:\JSFlutter\ocr_sederhana\an
 
 ### 📸 Dokumentasi
 
-  📷 **Screenshot Hasil:**  
+   📷 **Screenshot Hasil:**  
 <p align="center">
   <img src="images/hasil1.jpg" width="300"/>
   <img src="images/hasil2.jpg" width="300"/>
@@ -187,6 +187,13 @@ floatingActionButton: FloatingActionButton(
 
 ```
 
+   📷 **Screenshot Hasil:**  
+<p align="center">
+  <img src="images/uts1.1.jpg" width="250"/>
+  <img src="images/uts1.2.jpg" width="250"/>
+  <img src="images/uts1.3.jpg" width="250"/>
+</p>
+
 ----
 
 ### Soal 2 : Penyesuaian Tampilan dan Penanganan State/Error
@@ -196,11 +203,10 @@ jelas.
 
 #### 1. Custom Loading Screen di ScanScreen
 
-&emsp;a. Di ScanScreen (lib/screens/scan_screen.dart), modifikasi tampilan *loading* yang muncul sebelum kamera siap (if (!controller.value.isInitialized)) :
-&emsp;b. Latar Belakang: Scaffold(backgroundColor: Colors.grey[900]).
-&emsp;c. Isi: Di dalam Center, tampilkan Column berisi CircularProgressIndicator(coloColors.yellow).
-&emsp;d. Di bawah indikator, tambahkan Text(’Memuat Kamera... Harap tunggu.’,
-style: TextStyle(color: Colors.white, fontSize: 18)).
+&emsp;a. Di ScanScreen (lib/screens/scan_screen.dart), modifikasi tampilan *loading* yang muncul sebelum kamera siap (if (!controller.value.isInitialized)) :  
+&emsp;b. Latar Belakang: Scaffold(backgroundColor: Colors.grey[900]).  
+&emsp;c. Isi: Di dalam Center, tampilkan Column berisi CircularProgressIndicator(coloColors.yellow).  
+&emsp;d. Di bawah indikator, tambahkan Text(’Memuat Kamera... Harap tunggu.’, style: TextStyle(color: Colors.white, fontSize: 18)).
 
 ```dart
 if (_controller == null || !_controller!.value.isInitialized) {
@@ -228,7 +234,7 @@ if (_controller == null || !_controller!.value.isInitialized) {
 
 #### 2. pesifikasi Pesan Error
 
-&emsp;a. Di fungsi _takePicture() pada ScanScreen, modifikasi blok catch (e) untuk mengubah pesan *error* pada SnackBar.
+&emsp;a. Di fungsi _takePicture() pada ScanScreen, modifikasi blok catch (e) untuk mengubah pesan *error* pada SnackBar.  
 &emsp;b. Pesan SnackBar harus berbunyi: "Pemindaian Gagal! Periksa Izin Kamera atau coba lagi." (Hilangkan variabel *error* ($e)).
 
 ```dart
@@ -254,6 +260,12 @@ final ocrText = await _ocrFromFile(File('path_tidak_valid.jpg'));
 
 ```
 
+   📷 **Screenshot Hasil:**  
+<p align="center">
+  <img src="images/uts2.1.jpg" width="250"/>
+  <img src="images/uts2.2.jpg" width="250"/>
+</p>
+
 ----
 
 ### Soal 3 :  Implementasi Plugin Text-to-Speech (TTS)
@@ -262,8 +274,7 @@ final ocrText = await _ocrFromFile(File('path_tidak_valid.jpg'));
 
 #### 1. Instalasi Plugin
 
-&emsp;a. Tambahkan *plugin* flutter_tts ke dalam file pubspec.yaml (gunakan versi
-terbaru yang kompatibel).
+&emsp;a. Tambahkan *plugin* flutter_tts ke dalam file pubspec.yaml (gunakan versi terbaru yang kompatibel).  
 &emsp;b. Jalankan flutter pub get
 
 ```dart
@@ -282,11 +293,9 @@ dependencies:
 
 #### 2. Konversi Widget dan Inisialisasi
 
-&emsp;a. Ubah ResultScreen dari StatelessWidget menjadi **StatefulWidget**.
-&emsp;b. Di initState(), inisialisasi FlutterTts dan atur bahasa pembacaan menjadi
-Bahasa Indonesia.
-&emsp;c. Implementasikan dispose() untuk menghentikan mesin TTS saat halaman
-ditutup.
+&emsp;a. Ubah ResultScreen dari StatelessWidget menjadi **StatefulWidget**.  
+&emsp;b. Di initState(), inisialisasi FlutterTts dan atur bahasa pembacaan menjadi Bahasa Indonesia.  
+&emsp;c. Implementasikan dispose() untuk menghentikan mesin TTS saat halaman ditutup.  
 
 ```dart
 import 'package:flutter_tts/flutter_tts.dart';
@@ -352,8 +361,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
 #### 3. Fungsionalitas Pembacaan
 
-&emsp;a. Tambahkan FloatingActionButton kedua di ResultScreen (atau ganti AppBar
-dengan action button) dengan ikon Icons.volume_up.
+&emsp;a. Tambahkan FloatingActionButton kedua di ResultScreen (atau ganti AppBar dengan action button) dengan ikon Icons.volume_up.  
 &emsp;b. Ketika tombol ditekan, panggil fungsi speak() pada FlutterTts untuk membacakan seluruh isi ocrText.
 
 ```dart
@@ -378,3 +386,8 @@ Future<void> speak() async {
       ),
 
 ```
+
+   📷 **Screenshot Hasil:**  
+<p align="center">
+  <img src="images/uts3.1.jpg" width="250"/>
+</p>
