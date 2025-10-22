@@ -7,7 +7,8 @@
 **No Absen:** 26  
 
 **Repository:** [PMB_JS07 - OCR Sederhana](https://github.com/rohmanalka/ocr_sederhana)  
-📄 **[Klik di sini untuk melihat laporan lengkap](https://github.com/rohmanalka/flutter_plugin_pubdev/blob/main/Jobsheet6_26_SIB3C_Muhammad%20Rohman%20Al%20Kautsar.pdf)**  
+📄 **[Laporan Lengkap Jobsheet 7](https://github.com/rohmanalka/flutter_plugin_pubdev/blob/main/Jobsheet6_26_SIB3C_Muhammad%20Rohman%20Al%20Kautsar.pdf)**  
+📄 **[Laporan Lengkap UTS](https://github.com/rohmanalka/flutter_plugin_pubdev/blob/main/Jobsheet6_26_SIB3C_Muhammad%20Rohman%20Al%20Kautsar.pdf)**  
 
 ---
 
@@ -122,3 +123,258 @@ Meskipun teknologi OCR sudah sangat canggih, tingkat akurasi pengenalannya berva
 
 📚 **Kesimpulan:**  
 OCR sangat berguna dalam proses digitalisasi dan efisiensi kerja modern — terutama untuk mengubah dokumen fisik menjadi data digital yang dapat dicari, diolah, dan diintegrasikan dengan sistem informasi lainnya.
+
+----
+
+## UTS : Modifikasi ocr_sederhana  
+
+### Soal 1 : Modifikasi Struktur Navigasi dan Aliran
+
+&emsp;Tujuan: Menyederhanakan alur navigasi dan meningkatkan pengalaman pengguna di
+HomeScreen.
+
+#### 1. Pengubahan Navigasi Home
+
+&emsp;a. Ubah ElevatedButton di HomeScreen (lib/screens/home_screen.dart) menjadi *widget* **ListTile**.  
+&emsp;b. Atur ListTile: leading: Icon(Icons.camera_alt, color: Colors.blue); title: Text (’Mulai Pindai Teks Baru’).  
+&emsp;c. Fungsi onTap harus menggunakan Navigator.push() untuk ke ScanScreen.
+
+```dart
+body: ListView(
+         children: [
+            ListTile(
+               leading: const Icon(Icons.camera_alt, color: Colors.blue),
+               title: const Text('Mulai Pindai Teks Baru'),
+               onTap: () {
+                  Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (_) => const ScanScreen()),
+                  );
+               },
+            ),
+         ],
+      ),
+
+```
+
+----
+
+#### 2. Teks Utuh dan Navigasi Balik
+
+&emsp;a. Di ResultScreen (lib/screens/result_screen.dart), hapus fungsi ocrText replaceAllagar hasil teks ditampilkan dengan baris baru (\n) yang utuh.  
+&emsp;b. Tambahkan FloatingActionButton dengan ikon Icons.home.  
+&emsp;c. Ketika tombol ditekan, navigasi harus kembali langsung ke HomeScreen menggunakan **Navigator.pushAndRemoveUntil()** (atau metode yang setara) untuk menghapus semua halaman di atasnya dari stack navigasi.
+
+```dart
+child: SelectableText(
+         ocrText.isEmpty ? 'Tidak ada teks ditemukan.' : ocrText,
+         style: const TextStyle(fontSize: 18),
+      ),
+
+```
+
+```dart
+floatingActionButton: FloatingActionButton(
+                        child: const Icon(Icons.home),
+                        onPressed: () {
+                           Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (_) => const HomeScreen()),
+                              (route) => false,
+                           );
+                        },
+                     ),
+
+```
+
+----
+
+### Soal 2 : Penyesuaian Tampilan dan Penanganan State/Error
+
+&emsp;Tujuan: Memperbaiki tampilan *loading* dan memberikan *feedback* error yang lebih
+jelas.
+
+#### 1. Custom Loading Screen di ScanScreen
+
+&emsp;a. Di ScanScreen (lib/screens/scan_screen.dart), modifikasi tampilan *loading* yang muncul sebelum kamera siap (if (!controller.value.isInitialized)) :
+&emsp;b. Latar Belakang: Scaffold(backgroundColor: Colors.grey[900]).
+&emsp;c. Isi: Di dalam Center, tampilkan Column berisi CircularProgressIndicator(coloColors.yellow).
+&emsp;d. Di bawah indikator, tambahkan Text(’Memuat Kamera... Harap tunggu.’,
+style: TextStyle(color: Colors.white, fontSize: 18)).
+
+```dart
+if (_controller == null || !_controller!.value.isInitialized) {
+   return Scaffold(
+      backgroundColor: Colors.grey[900],
+      body: Center(
+         child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+               CircularProgressIndicator(color: Colors.yellow),
+               SizedBox(height: 16),
+               Text(
+                  'Memuat Kamera... Harap tunggu.',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+               ),
+            ],
+         ),
+      )
+   );
+}
+
+```
+
+----
+
+#### 2. pesifikasi Pesan Error
+
+&emsp;a. Di fungsi _takePicture() pada ScanScreen, modifikasi blok catch (e) untuk mengubah pesan *error* pada SnackBar.
+&emsp;b. Pesan SnackBar harus berbunyi: "Pemindaian Gagal! Periksa Izin Kamera atau coba lagi." (Hilangkan variabel *error* ($e)).
+
+```dart
+catch (e) {
+   if (!mounted) return;
+   ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Pemindaian Gagal! Periksa Izin Kamera atau coba lagi.')),
+   );
+}
+
+```
+
+test error : ubah path file kamera yang tidak valid pada kode
+
+```dart
+final ocrText = await _ocrFromFile(File(image.path));
+
+```
+menjadi
+
+```dart
+final ocrText = await _ocrFromFile(File('path_tidak_valid.jpg'));
+
+```
+
+----
+
+### Soal 3 :  Implementasi Plugin Text-to-Speech (TTS)
+
+&emsp;Tujuan: Mengintegrasikan fitur membaca teks secara lisan menggunakan *plugin* flutter_tts.
+
+#### 1. Instalasi Plugin
+
+&emsp;a. Tambahkan *plugin* flutter_tts ke dalam file pubspec.yaml (gunakan versi
+terbaru yang kompatibel).
+&emsp;b. Jalankan flutter pub get
+
+```dart
+dependencies:
+  flutter:
+    sdk: flutter
+  google_mlkit_text_recognition: ^0.11.0
+  camera: ^0.10.6
+  path_provider: ^2.1.3
+  path: ^1.8.3
+  flutter_tts: ^4.0.2
+
+```
+
+----
+
+#### 2. Konversi Widget dan Inisialisasi
+
+&emsp;a. Ubah ResultScreen dari StatelessWidget menjadi **StatefulWidget**.
+&emsp;b. Di initState(), inisialisasi FlutterTts dan atur bahasa pembacaan menjadi
+Bahasa Indonesia.
+&emsp;c. Implementasikan dispose() untuk menghentikan mesin TTS saat halaman
+ditutup.
+
+```dart
+import 'package:flutter_tts/flutter_tts.dart';
+
+```
+
+```dart
+class ResultScreen extends StatefulWidget {
+  final String ocrText;
+
+  const ResultScreen({super.key, required this.ocrText});
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  late FlutterTts flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    flutterTts = FlutterTts();
+    flutterTts.setLanguage("id-ID");
+  }
+
+  @override
+  void dispose() {
+    flutterTts.stop();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Hasil OCR')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: SelectableText(
+            widget.ocrText.isEmpty ? 'Tidak ada teks ditemukan.' : widget.ocrText,
+            style: const TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.home),
+        onPressed: () {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const HomeScreen()),
+            (route) => false,
+          );
+        },
+      ),
+    );
+  }
+}
+
+```
+
+----
+
+#### 3. Fungsionalitas Pembacaan
+
+&emsp;a. Tambahkan FloatingActionButton kedua di ResultScreen (atau ganti AppBar
+dengan action button) dengan ikon Icons.volume_up.
+&emsp;b. Ketika tombol ditekan, panggil fungsi speak() pada FlutterTts untuk membacakan seluruh isi ocrText.
+
+```dart
+Future<void> speak() async {
+    if (widget.ocrText.isNotEmpty) {
+      await flutterTts.speak(widget.ocrText);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Hasil OCR'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.volume_up),
+            tooltip: 'Bacakan teks',
+            onPressed: speak,
+          ),
+        ],
+      ),
+
+```
